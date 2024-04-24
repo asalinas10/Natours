@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -71,11 +72,8 @@ app.use(
   }),
 );
 
-// Example of middleware
-// app.use((req, res, next) => {
-//   console.log('Hello from the middleware!');
-//   next();
-// });
+// Compresses text files sent to clients, used for app deployment
+app.use(compression());
 
 // Test Middleware
 app.use((req, res, next) => {
@@ -83,6 +81,10 @@ app.use((req, res, next) => {
   //console.log(req.cookies);
   next();
 });
+// app.use((req, res, next) => {
+//   console.log('Hello from the middleware!');
+//   next();
+// });
 
 // 2. ROUTES
 // Pug Routes
