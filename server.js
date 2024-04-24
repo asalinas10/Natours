@@ -37,3 +37,11 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
   });
 });
+
+// Allows for graceful shutting down when dyno's refresh every 24 hrs
+process.on('SIGTERM', () => {
+  console.log('!!SIGTERM RECIEVED!! Shutting down gracefully');
+  server.close(() => {
+    console.log('!!Process Terminated!!');
+  });
+});
